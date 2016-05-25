@@ -4,6 +4,15 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="Parser" projectFiles="true">
+        <itemPath>Parser/answ.txt</itemPath>
+        <itemPath>Parser/istqb.txt</itemPath>
+        <itemPath>Parser/main2.cpp</itemPath>
+        <itemPath>Parser/parser.cpp</itemPath>
+        <itemPath>Parser/parser.h</itemPath>
+        <itemPath>Parser/question.cpp</itemPath>
+        <itemPath>Parser/question.h</itemPath>
+      </logicalFolder>
       <itemPath>AllQuestionSet.hpp</itemPath>
       <itemPath>OpenQuestionSet.hpp</itemPath>
       <itemPath>Question.hpp</itemPath>
@@ -61,6 +70,20 @@
       </item>
       <item path="OpenQuestionSet.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Parser/answ.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parser/istqb.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parser/main2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Parser/parser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Parser/parser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parser/question.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Parser/question.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Question.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Question.hpp" ex="false" tool="3" flavor2="0">
@@ -110,6 +133,20 @@
       <item path="OpenQuestionSet.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OpenQuestionSet.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parser/answ.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parser/istqb.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parser/main2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Parser/parser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Parser/parser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Parser/question.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Parser/question.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Question.cpp" ex="false" tool="1" flavor2="0">
       </item>

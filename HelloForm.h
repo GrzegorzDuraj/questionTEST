@@ -32,8 +32,10 @@
 #define	_HELLOFORM_H
 
 #include "ui_HelloForm.h"
-#include "QuestionText.hpp"
+//#include "QuestionText.hpp"
 #include "OpenQuestionSet.hpp"
+#include "Parser/question.h"
+
 
 class HelloForm : public QDialog {
     Q_OBJECT
@@ -60,6 +62,7 @@ private:
     
     void resetViewTextLabel();
     void resetViewCheckBox();
+    void resetViewCheckBoxSetChecked();
 };
 
 #endif	/* _HELLOFORM_H */

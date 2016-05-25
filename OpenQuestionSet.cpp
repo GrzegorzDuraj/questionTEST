@@ -11,7 +11,7 @@
 
 OpenQuestionSet::OpenQuestionSet() :
         mt(time(0)), // 1931 - deterministic 32-bit seed for 
-        sizeOfOpenQuestion(2),
+        sizeOfOpenQuestion(7),
         distQuestions(0, sizeOfOpenQuestion - 1),// distribution for Random Questions
         allQuestionSet(new AllQuestionSet)
 {
@@ -30,10 +30,11 @@ Question& OpenQuestionSet::getQuestion()
 
     currentNumberQuestion = distQuestions(mt);
     qDebug() << openQuestion.size();
-    qDebug() << "numer pytania " <<  openQuestion.at(currentNumberQuestion).numerpytania;
-    qDebug() << openQuestion.at(currentNumberQuestion).vec.size();
+    qDebug() << "numer pytania " <<  openQuestion.at(currentNumberQuestion).getQuestionNumber();
+    qDebug() << "liczba odpowiedzi " << openQuestion.at(currentNumberQuestion).getAnswerVector().size();
     qDebug() << "Current qustion " << currentNumberQuestion;
-    
+    //qDebug() << "Current  " <<  openQuestion.at(currentNumberQuestion).;
+
     Question &questionToMix = openQuestion.at(currentNumberQuestion);
     
     mixStructureOfQuestion(questionToMix);
@@ -43,25 +44,25 @@ Question& OpenQuestionSet::getQuestion()
 void OpenQuestionSet::mixStructureOfQuestion(Question &questionToMix)
 {
 
-    int sizeOf = questionToMix.vec.size();
+    int sizeOf = questionToMix.getAnswerVector().size();
     std::uniform_int_distribution<int> distAns (0, sizeOf-1 );
    
     for (int i = 10 ; i >= 0 ; --i )
     {
         int random1 = distAns(mt);
         int random2 = distAns(mt);
-        swap(questionToMix.vec.at(random1), questionToMix.vec.at(random2))  ;
+        swap(questionToMix.getAnswerVector().at(random1), questionToMix.getAnswerVector().at(random2))  ;
     }
 }
 
 void OpenQuestionSet::promoteAnswer(bool ifCorrect)
 {
     Question &q = openQuestion.at(currentNumberQuestion);
-    q.attempt++;
+    q.increaseAttempt();
     if (ifCorrect)
-        q.correctAns++;
+        q.increaseCorrectAnswer();
     
-    if (q.correctAns > 3 ){
+    if (q.getCorrectAnswer() > 3 ){
        // openQuestion.erase(std::remove (openQuestion.begin(), openQuestion.end(), currentNumberQuestion),  openQuestion.end()  );
         qDebug() << "Remove Question " << currentNumberQuestion;
         openQuestion.erase(openQuestion.begin() + currentNumberQuestion);
@@ -74,7 +75,7 @@ void OpenQuestionSet::promoteAnswer(bool ifCorrect)
 void OpenQuestionSet::openNewQuestion()
 {
     Question q = allQuestionSet->getNewQuestioin();
-    if (q.question.empty())
+    if (q.getQuestion().empty())
     {
         sizeOfOpenQuestion--;
     }

@@ -9,7 +9,9 @@
 #define	OPENQUESTIONSET_HPP
 
 #include <vector>
-#include "Question.hpp"
+//#include "Question.hpp"
+#include "Parser/question.h"
+
 #include "AllQuestionSet.hpp"
 #include <random>
 #include <tuple>

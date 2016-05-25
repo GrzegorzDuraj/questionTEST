@@ -12,7 +12,8 @@
 #include <random>
 
 
-#include "Question.hpp"
+//#include "Question.hpp"
+#include "Parser/question.h"
 
 class AllQuestionSet {
 public:

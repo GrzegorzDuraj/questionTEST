@@ -7,42 +7,53 @@
 
 #include "AllQuestionSet.hpp"
 #include <QDebug>
+#include "Parser/parser.h"
 
 AllQuestionSet::AllQuestionSet():
         mt(time(0)) //deterministic 32-bit seed for 
 
 
 {
-    Question q1;
-    q1.question = "pytanko ... PP";
-    q1.vec.push_back(std::make_pair("zla", false));
-    q1.vec.push_back(std::make_pair("dobra", true));
-    q1.vec.push_back(std::make_pair("bardzo zla ", false));
-    q1.vec.push_back(std::make_pair("tez dobra", true));
-    q1.numerpytania = 1; 
-    q1.attempt = 0; 
-    q1.correctAns = 0 ; 
- 
-    Question q2;
-    q2.question = "pytanko ... @3423 ";
-    q2.vec.push_back(std::make_pair("dobra", true));
-    q2.vec.push_back(std::make_pair("zla", false));
-    q2.vec.push_back(std::make_pair("bardzo nie dobra", false));
-    q2.vec.push_back(std::make_pair("bardzo zla ", false));
-    q2.vec.push_back(std::make_pair("super zla", false));
-    q2.numerpytania = 2; 
-    q2.attempt = 2; 
-    q2.correctAns = 2; 
-    
-    for (int i = 0 ; i < 350 ; i = i+2){
-        q1.numerpytania = i; 
-        q2.numerpytania = i+1; 
+   
+	Parser parser;
 
-        allQestion.push_back(q1);
-        allQestion.push_back(q2);
-    }
+//Pobieramy tekst z plikow i wkladamy do private member stringow parsera
+	parser.setTestContent(parser.getTextFromFile(Parser::fileWithTest));
+	parser.setAnswerContent(parser.getTextFromFile(Parser::fileWithAnswer));
 
+//Wrzucamy same pytania do wektora
+	std::vector < std::string > questions = parser.parseQuestionsToVector(
+			parser.getTestContent());
 
+//Wrzucamy odpowiedzi do wektora
+	std::vector < std::string > answers = parser.parseAnswersToVector(
+			parser.getTestContent());
+
+//Wrzucamy prawidlowe odpowiedzi do wektora
+	std::vector < std::string > correctAnswers = parser.parseCorrectAnswersToVector(
+			parser.getAnswerContent());
+
+//Mergujemy odpowiedzi z prawidlowymi odpowiedziami do wektora z wektorami par
+	std::vector < std::vector<std::pair<std::string, bool>>> mergedAnswers =
+			parser.mergeAnswersWithCorrectAnswers(answers, correctAnswers);
+
+        int a = questions.size();
+	for (unsigned int i = 0; i < questions.size(); ++i) {
+		//Question question(questions.at(i), i + 1, mergedAnswers.at(i), 0, 0);
+		allQestion.push_back(Question (questions.at(i), i + 1, mergedAnswers.at(i), 0, 0));
+        
+
+	}
+        for (auto a : mergedAnswers){
+            
+       
+            for( auto b: a){
+                  qDebug () << b.first.c_str() << " " << b.second;; 
+
+//                 qDebug () <<  
+            }
+
+     }
 }
 
 

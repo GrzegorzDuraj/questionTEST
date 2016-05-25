@@ -42,7 +42,7 @@ HelloForm::HelloForm():
 
     defaultPalatte = widget.question->palette();
     paletteBlue = widget.answer_1->palette();
-    paletteBlue.setColor(QPalette::Window, QColor(Qt::blue));
+    paletteBlue.setColor(QPalette::Window, QColor(Qt::yellow));
 
     paletteRed = widget.answer_1->palette();
     paletteRed.setColor(QPalette::Window, QColor(Qt::red));
@@ -99,6 +99,7 @@ void HelloForm::nextQuestion()
     
     currentQuestion = openQuestionSet->getQuestion();
 
+    resetViewCheckBoxSetChecked();
     fullFillTextWidget();
 }
 
@@ -111,8 +112,10 @@ void HelloForm::setColorOnTextLabel()
     }
     
     int i = 0; 
-    for (auto & blueForegrand : currentQuestion.vec)
+    for (auto & blueForegrand : currentQuestion.getAnswerVector() )
     {
+        qDebug () << blueForegrand.first.c_str() << "  ";
+        qDebug() << blueForegrand.second << "\n";
         if (blueForegrand.second == true ) 
         {
             vecAnsLayout.at(i)->setPalette(paletteBlue);
@@ -128,7 +131,7 @@ void HelloForm::fullFillTextWidget()
     resetViewCheckBox();
 
     int i = 0 ; 
-    for (auto  currQ : currentQuestion.vec)
+    for (auto  currQ : currentQuestion.getAnswerVector())
     { 
         vecAnsCheckBox.at(i)->setVisible(true);
         vecAnsLayout.at(i)->setVisible(true);
@@ -136,14 +139,14 @@ void HelloForm::fullFillTextWidget()
         ++i;
     }
     
-    widget.question->setText( QString (currentQuestion.question.c_str()) );
+    widget.question->setText( QString (currentQuestion.getQuestion().c_str()) );
     
     widget.correctAns->setText(QString ("Given correct answer ") +
-            std::to_string (currentQuestion.correctAns).c_str()  );
+            std::to_string (currentQuestion.getCorrectAnswer()).c_str()  );
     widget.attemptLabel->setText(QString ("Attempt number ") +
-            std::to_string (currentQuestion.attempt).c_str() );
+            std::to_string (currentQuestion.getAttempt()).c_str() );
     widget.numerPyt->setText(QString ("NUmer Pytania ") +
-            std::to_string (currentQuestion.numerpytania).c_str() );
+            std::to_string (currentQuestion.getQuestionNumber()).c_str() );
 
 }
 
@@ -155,12 +158,12 @@ bool HelloForm::checkAnswer()
     int counterForTrueAnwser = 0;
     int counterForTrueAnswered = 0; 
 
-    for (; i<currentQuestion.vec.size(); ++i)
+    for (; i<currentQuestion.getAnswerVector().size(); ++i)
     {
         if (vecAnsCheckBox.at(i)->isChecked() ) 
         {
            ++counterForTrueAnwser;
-           if (currentQuestion.vec.at(i).second==true)
+           if (currentQuestion.getAnswerVector().at(i).second==true)
            {
                correct = true;
            }
@@ -172,7 +175,7 @@ bool HelloForm::checkAnswer()
         }
         
     }
-    for (auto a: currentQuestion.vec)
+    for (auto a: currentQuestion.getAnswerVector())
     {
         if (a.second) ++counterForTrueAnswered;
     }
@@ -186,6 +189,16 @@ void HelloForm::resetViewCheckBox()
     {
         checkBox->setAutoFillBackground(true);
         checkBox->setVisible(false);
+    }
+    
+}
+
+
+void HelloForm::resetViewCheckBoxSetChecked()
+{
+    for (auto & checkBox : vecAnsCheckBox)
+    {
+
         checkBox->setChecked(false);
     }
     
